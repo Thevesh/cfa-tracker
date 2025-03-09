@@ -156,7 +156,7 @@ export default function CumulativeChart({ data }: CumulativeChartProps) {
         borderWidth: 1,
         pointRadius: 0,
         pointHoverRadius: 4,
-        tension: 0.4,
+        tension: 0,
         fill: true,
         spanGaps: true,
         order: 2
@@ -169,7 +169,7 @@ export default function CumulativeChart({ data }: CumulativeChartProps) {
         borderWidth: 0.75,
         pointRadius: 0,
         pointHoverRadius: 4,
-        tension: 0.4,
+        tension: 0,
         fill: true,
         spanGaps: true,
         order: 1

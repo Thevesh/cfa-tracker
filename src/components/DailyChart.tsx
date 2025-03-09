@@ -62,7 +62,7 @@ export default function DailyChart({ data }: DailyChartProps) {
         pointRadius: 0,
         pointHoverRadius: 4,
         pointBackgroundColor: '#dc2626',
-        tension: 0.1,
+        tension: 0,
         spanGaps: true,
         order: 1
       }
