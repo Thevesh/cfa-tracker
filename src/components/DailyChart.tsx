@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -6,6 +8,7 @@ import {
   LineElement,
   BarElement,
   BarController,
+  LineController,
   Title,
   Tooltip,
   Legend,
@@ -22,6 +25,7 @@ ChartJS.register(
   LineElement,
   BarElement,
   BarController,
+  LineController,
   Title,
   Tooltip,
   Legend
