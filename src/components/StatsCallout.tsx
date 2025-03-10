@@ -37,31 +37,31 @@ export default function StatsCallout({ data }: StatsCalloutProps) {
   }, [data]);
 
   return (
-    <div className="grid grid-cols-3 gap-8 w-full max-w-3xl mx-auto mb-4">
+    <div className="grid grid-cols-3 gap-2 md:gap-8 w-full max-w-3xl mx-auto mb-4">
       <div className="text-center">
-        <dt className="text-sm font-medium text-gray-600 mb-1">Daily KPs</dt>
-        <dd className="text-2xl font-bold text-gray-900">
+        <dt className="text-xs md:text-sm font-medium text-gray-600 mb-1">Daily KPs</dt>
+        <dd className="text-xl md:text-2xl font-bold text-gray-900">
           {stats.dailyKPs !== null ? `+${stats.dailyKPs.toLocaleString()}` : '-'}
         </dd>
       </div>
       <div className="text-center">
-        <dt className="text-sm font-medium text-gray-600 mb-1">Cumulative KPs</dt>
-        <dd className="text-2xl font-bold text-gray-900">
+        <dt className="text-xs md:text-sm font-medium text-gray-600 mb-1">Total KPs</dt>
+        <dd className="text-xl md:text-2xl font-bold text-gray-900">
           {stats.cumulativeKPs !== null ? (
             <>
               {stats.cumulativeKPs.toLocaleString()}
-              <span className="text-base font-medium text-gray-600 ml-1"> / 5,478</span>
+              <span className="text-sm md:text-base font-medium text-gray-600 ml-0.5 md:ml-1"> / 5,478</span>
             </>
           ) : '-'}
         </dd>
       </div>
       <div className="text-center">
-        <dt className="text-sm font-medium text-gray-600 mb-1">Current Target</dt>
-        <dd className="text-2xl font-bold text-gray-900">
+        <dt className="text-xs md:text-sm font-medium text-gray-600 mb-1">Target</dt>
+        <dd className="text-xl md:text-2xl font-bold text-gray-900">
           {stats.currentTarget !== null ? (
             <>
               {stats.currentTarget.toLocaleString()}
-              <span className="text-base font-medium text-gray-600 ml-1"> / day</span>
+              <span className="text-sm md:text-base font-medium text-gray-600 ml-0.5 md:ml-1"> / day</span>
             </>
           ) : '-'}
         </dd>
