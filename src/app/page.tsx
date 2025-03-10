@@ -5,10 +5,13 @@ import DailyChart from '@/components/DailyChart';
 import CumulativeChart from '@/components/CumulativeChart';
 import ViewToggle from '@/components/ViewToggle';
 import TimeRangeSlider from '@/components/TimeRangeSlider';
+import StatsCallout from '@/components/StatsCallout';
 import { CombinedData, ChartData } from '@/types';
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 import { Inter } from 'next/font/google';
 import InspirationQuote from '@/components/InspirationQuote';
+import { format, addDays } from 'date-fns';
+import { toZonedTime } from 'date-fns-tz';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -21,7 +24,6 @@ export default function Home() {
     cumulative: { labels: [], actual: [], target: [] }
   });
   const [dateRange, setDateRange] = useState<[number, number]>([0, 0]);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [quote, setQuote] = useState<string>('');
   const [showQuote, setShowQuote] = useState(false);
 
@@ -32,11 +34,18 @@ export default function Home() {
       const newData = await response.json();
       setData(newData);
       
-      // Only set full date range on initial load
-      if (isInitialLoad) {
-        setDateRange([0, newData.daily.labels.length - 1]);
-        setIsInitialLoad(false);
-      }
+      // Set date range to show up to tomorrow in Malaysia time
+      const msiaTime = toZonedTime(new Date(), 'Asia/Kuala_Lumpur');
+      const tomorrow = addDays(msiaTime, 1);
+      const tomorrowStr = format(tomorrow, 'yyyy-MM-dd');
+      
+      // Find the index that's one day after current date
+      const endIndex = newData.daily.labels.findIndex((date: string) => date === tomorrowStr);
+      const finalEndIndex = endIndex === -1 ? newData.daily.labels.length - 1 : endIndex;
+      
+      // Set range to show last 30 days by default, or full range if less than 30 days
+      const startIndex = Math.max(0, finalEndIndex - 29);
+      setDateRange([startIndex, finalEndIndex]);
       
       setLastUpdated(new Date());
 
@@ -49,7 +58,7 @@ export default function Home() {
     } finally {
       setTimeout(() => setIsLoading(false), 300);
     }
-  }, [isInitialLoad]);
+  }, []);
 
   // Fetch data on initial load
   useEffect(() => {
@@ -85,8 +94,8 @@ export default function Home() {
     <main className={`min-h-screen bg-white p-6 ${inter.className}`}>
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col items-center space-y-6 mb-6">
-          <h1 className="text-3xl font-light text-gray-900 tracking-wide">CFA, on the Way!</h1>
+        <div className="flex flex-col items-center space-y-6 mb-12">
+          <h1 className="text-3xl font-light text-gray-900 tracking-wide">Joyce Lee, CFA</h1>
           <div className="flex flex-col items-center gap-3">
             <ViewToggle view={view} onChange={setView} />
             <button
@@ -98,13 +107,19 @@ export default function Home() {
               Refresh
             </button>
             <span className="text-sm text-gray-500 transition-opacity duration-200">
-              {lastUpdated ? `Last updated: ${lastUpdated.toLocaleString()}` : 'Not updated yet'}
+              {lastUpdated ? (() => {
+                const msiaTime = toZonedTime(lastUpdated, 'Asia/Kuala_Lumpur');
+                return `Last updated: ${format(msiaTime, 'PPpp')}`;
+              })() : 'Not updated yet'}
             </span>
           </div>
         </div>
 
+        {/* Stats Callouts */}
+        <StatsCallout data={data} />
+
         {/* Chart */}
-        <div className={`bg-white transition-opacity duration-200 ${isLoading ? 'opacity-50' : 'opacity-100'}`}>
+        <div className={`bg-white -mt-4 transition-opacity duration-200 ${isLoading ? 'opacity-50' : 'opacity-100'}`}>
           <div className="h-[60vh]">
             {view === 'daily' ? (
               <DailyChart data={getFilteredData(data.daily)} />
