@@ -95,7 +95,7 @@ export default function Home() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex flex-col items-center space-y-6 mb-12">
-          <h1 className="text-3xl font-light text-gray-900 tracking-wide">Joyce Lee, CFA</h1>
+          <h1 className="text-3xl font-light text-gray-900 tracking-wide">CFA, on the Way!</h1>
           <div className="flex flex-col items-center gap-3">
             <ViewToggle view={view} onChange={setView} />
             <button
@@ -120,7 +120,7 @@ export default function Home() {
 
         {/* Chart */}
         <div className={`bg-white -mt-4 transition-opacity duration-200 ${isLoading ? 'opacity-50' : 'opacity-100'}`}>
-          <div className="h-[60vh]">
+          <div className="h-[45vh] md:h-[60vh]">
             {view === 'daily' ? (
               <DailyChart data={getFilteredData(data.daily)} />
             ) : (
