@@ -43,7 +43,7 @@ export default function DailyChart({ data }: DailyChartProps) {
     datasets: [
       {
         type: 'bar' as const,
-        label: 'Actual Progress',
+        label: 'Actual',
         data: data.actual,
         backgroundColor: '#346ff320',
         borderColor: '#346ff3',

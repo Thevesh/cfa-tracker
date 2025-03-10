@@ -149,7 +149,7 @@ export default function CumulativeChart({ data }: CumulativeChartProps) {
     labels: data.labels,
     datasets: [
       {
-        label: 'Actual Progress',
+        label: 'Actual',
         data: data.actual.map(v => v === 0 ? null : v),
         borderColor: '#346ff3',
         backgroundColor: '#346ff315',

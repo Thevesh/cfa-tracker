@@ -113,7 +113,7 @@ export default function ProgressChart({ data }: ProgressChartProps) {
     labels: data.labels,
     datasets: [
       {
-        label: 'Actual Progress',
+        label: 'Actual',
         data: data.actual,
         borderColor: '#10B981', // Emerald-500
         backgroundColor: '#10B98120',
